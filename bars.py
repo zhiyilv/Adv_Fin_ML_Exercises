@@ -115,6 +115,17 @@ def mad_outlier(y, thresh=3.):
 mad = mad_outlier(df.price.values.reshape(-1, 1))
 df.loc[mad]
 
-# now the data shall be cleared
+# now the data shall be cleaned
 sns.boxplot(df.loc[~mad].price)
+df = df.loc[~mad]
+cprint(df)
+outfp = PurePath(data_dir/'processed'/'clean_IVE_fut_prices.parq')
+df.to_parquet(outfp)
+
+# can start from here
+infp=PurePath(data_dir/'processed'/'clean_IVE_fut_prices.parq')
+df = pd.read_parquet(infp)
+cprint(df)
+
+
 
